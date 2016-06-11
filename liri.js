@@ -4,70 +4,50 @@ var keys = require('./keys.js');
 
 
 var action = process.argv[2]; 
-var value = process.argv[3];
+var value = process.argv.slice(3).join('+');
 
 //the switch-case will direct which function to use based on user input
 switch(action){
     case 'my-tweets':
-        twitter();
+        twitter(value);
         break;
     case 'spotify-this-song':
-        spotifySong();
+        spotifySong(value);
         break;
     case 'movie-this':
-        movieSearch();
+        movieSearch(value);
         break;
     case 'do-what-it-says':
-        random();
+        random(value);
         break;
 	}
 
-function spotifySong(){
-	var spotify = require('spotify');
+//function spotifySong(){
+	//var spotify = require('spotify');
  
-	spotify.search({ type: 'track', query: value }, function(err, data) {
-    if ( err ) {
-        console.log('Error occurred: ' + err);
-        return;
-    }
+	//spotify.search({ type: 'track', query: value }, function(err, data) {
+    //if ( err ) {
+       // console.log('Error occurred: ' + err);
+        //return;
+    //}
  
-    console.log(JSON.parse(body)["artist", "name", "preview_url", "album"])
-	});
+    //console.log(JSON.parse(body)["artist", "name", "preview_url", "album"])
+	//});
 
-	}
+	//}
 
-function twitter(){
-	var keys = require('./keys.js');
+//function twitter(){
+	//var keys = require('./keys.js');
 	
-}
+//}
 
 
 function movieSearch(){
-	var request = require('request');
 
-// Store all of the arguments in an array 
-	var nodeArgs = value;
-
-// Create an empty variable for holding the movie name
-	var movieName = "";
-
-// Loop through all the words in the node argument
-
-	for (var i=2; i<nodeArgs.length; i++){
-
-	if (i>2 && i< nodeArgs.length){
-
-		movieName = movieName + "+" + nodeArgs[i];
-	}
-
-	else {
-
-		movieName = movieName + nodeArgs[i];
-	}
-	}
-
-// Then run a request to the OMDB API with the movie specified 
-	var queryUrl = 'http://www.omdbapi.com/?t=' + movieName +'&y=&plot=short&r=json';
+var request = require('request');
+// request to the OMDB API with the movie specified 
+	
+	var queryUrl = 'http://www.omdbapi.com/?t=' + value +'&y=&plot=short&r=json';
 
 // This line is just to help us debug against the actual URL.  
 	console.log(queryUrl);
@@ -78,8 +58,23 @@ function movieSearch(){
 	if (!error && response.statusCode == 200) {
 
 		// Parse the body of the site and recover just the imdbRating
-	s
-		console.log("Release Year: " + JSON.parse(body)["Year"])
+	
+		console.dir("Title: " + JSON.parse(body)["Title"]);
+		console.dir("Release Year: " + JSON.parse(body)["Year"]);
+		console.dir("Rating: " + JSON.parse(body)["imdbRating"]);
+		console.dir("Country: " + JSON.parse(body)["Country"]);
+		console.dir("Language: " + JSON.parse(body)["Language"]);
+		console.dir("Plot: " + JSON.parse(body)["Plot"]);
+		console.dir("Actors: " + JSON.parse(body)["Actors"]);
+		console.dir("Rotten Tomatoes Rating: " + JSON.parse(body)["tomatoRating"]);
+		console.dir("Rotten Tomatoes URL: " + JSON.parse(body)["tomatoURL"]);
+
+
+
+
+	
+
+
 	}
 	});
 }
