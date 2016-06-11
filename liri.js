@@ -1,6 +1,8 @@
 
 var action = process.argv[2]; 
 var value = process.argv.slice(3).join('+');
+// fs is an NPM package for reading and writing files 
+var fs = require('fs');
 
 //the switch-case will direct which function to use based on user input
 switch(action){
@@ -41,8 +43,17 @@ function spotifySong(){
 	});
 
 	}
+function random(){
+
+	//reads the file random.text
+	fs.readFile("random.txt", "utf8", function(error, data) {
+
+		console.log(data);//ensures we pulled the correct data
+});
+}
 
 function twitter(){
+	
 	var keys = require('./keys.js');
 	var Twitter = require('twitter');
 	var client = new Twitter(keys.twitterKeys);
