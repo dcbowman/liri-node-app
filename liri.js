@@ -46,6 +46,9 @@ function movieSearch(){
 
 var request = require('request');
 // request to the OMDB API with the movie specified 
+	if (!value) //if there is no value
+		{value = "Mr. Nobody";
+		} //reassigns value to Mr. Nobody
 	
 	var queryUrl = 'http://www.omdbapi.com/?t=' + value +'&y=&plot=short&r=json&tomatoes=true';
 
@@ -57,7 +60,7 @@ var request = require('request');
 	// If the request is successful (i.e. if the response status code is 200)
 	if (!error && response.statusCode == 200) {
 
-		// Parse the body of the site and recover just the imdbRating
+		// Parse the body of the site and recover selected info
 	
 		console.dir("Title: " + JSON.parse(body)["Title"]);
 		console.dir("Release Year: " + JSON.parse(body)["Year"]);
@@ -68,12 +71,6 @@ var request = require('request');
 		console.dir("Actors: " + JSON.parse(body)["Actors"]);
 		console.dir("Rotten Tomatoes Rating: " + JSON.parse(body)["tomatoRating"]);
 		console.dir("Rotten Tomatoes URL: " + JSON.parse(body)["tomatoURL"]);
-
-
-
-
-	
-
 
 	}
 	});
