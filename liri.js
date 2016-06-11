@@ -24,14 +24,19 @@ switch(action){
 
 function spotifySong(){
 	var spotify = require('spotify');
+
+	if(!value){
+		value= "What's my age again"
+	}
  
 	spotify.search({ type: 'track', query: value, limit: 10 }, function(err, data) {
     if ( err ) {
        console.log('Error occurred: ' + err);
         return;
     }
+
+   console.dir("Artist: "+ data.tracks.items[0].artists[0].name); //artist
    console.dir("Title: "+ data.tracks.items[0].name); //song name
-   console.dir("Artist: "+ data.tracks.items[0].artists.name); //artist
    console.dir("Preview "+data.tracks.items[0].preview_url); //preview
    console.dir("Album "+ data.tracks.items[0].album.name); //album
  
