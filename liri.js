@@ -1,7 +1,3 @@
-//pulls info for twitter keys
-var keys = require('./keys.js');
-//var request = require('request');
-
 
 var action = process.argv[2]; 
 var value = process.argv.slice(3).join('+');
@@ -46,10 +42,27 @@ function spotifySong(){
 
 	}
 
-//function twitter(){
-	//var keys = require('./keys.js');
+function twitter(){
+	var keys = require('./keys.js');
+	var Twitter = require('twitter');
+	var client = new Twitter(keys.twitterKeys);
+
+	var params = {
+		screen_name:'dcbowman1',
+		};
+
+   client.get('search/tweets', params,gotData);
+
+    function gotData(error, data, response){
+   	var tweets = data.statuses;
+   	for (var i = 0; i < tweets.length; i++){
+  		if (!error) {
+    		console.log(tweets.text);
+			}
+  		}
+	}
 	
-//}
+}
 
 
 function movieSearch(){
