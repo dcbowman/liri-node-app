@@ -1,8 +1,20 @@
-
+//defines user inputs
 var action = process.argv[2]; 
 var value = process.argv.slice(3).join('+');
-// fs is an NPM package for reading and writing files 
+// connects to npm modules 
+var spotify = require('spotify');
+var request = require('request');
 var fs = require('fs');
+var keys = require('./keys.js');
+var Twitter = require('twitter');
+
+var client = new Twitter({
+
+	consumer_key: keys.twitterKeys.consumer_key,
+	consumer_secret: keys.twitterKeys.consumer_secret,
+	access_token_key: keys.twitterKeys.access_token_key,
+	access_token_secret: keys.twitterKeys.access_token_secret
+});
 
 //the switch-case will direct which function to use based on user input
 switch(action){
@@ -21,8 +33,6 @@ switch(action){
 	}
 
 function spotifySong(){
-	var spotify = require('spotify');
-
 	if(!value){
 		value= "What's my age again"
 	}
@@ -48,21 +58,26 @@ function random(){
 	//reads the file random.text
 	fs.readFile("random.txt", "utf8", function(error, data) {
 
-		console.log(data);//ensures we pulled the correct data
-});
-}
+	//console.log(data);//ensures we pulled the correct data
+
+	var dataArr = data.split(','); //puts data into an array
+
+	console.log(dataArr); //ensures it's split 
+
+	spotifySong(dataArr[0], dataArr[1]);//runs the spotfify funtion
+
+	});//end of fs.read
+
+	}//end of random
 
 function twitter(){
 	
-	var keys = require('./keys.js');
-	var Twitter = require('twitter');
-	var client = new Twitter(keys.twitterKeys);
-
 	var params = {
 		screen_name:'dcbowman1',
+		count: 10
 		};
 
-   client.get('search/tweets', params,gotData);
+   client.get('statuses/user_timeline', params,gotData);
 
     function gotData(error, data, response){
    	var tweets = data.statuses;
@@ -78,8 +93,6 @@ function twitter(){
 
 function movieSearch(){
 
-var request = require('request');
-// request to the OMDB API with the movie specified 
 	if (!value) //if there is no value
 		{value = "Mr. Nobody";
 		} //reassigns value to Mr. Nobody
@@ -106,6 +119,6 @@ var request = require('request');
 		console.dir("Rotten Tomatoes Rating: " + JSON.parse(body)["tomatoRating"]);
 		console.dir("Rotten Tomatoes URL: " + JSON.parse(body)["tomatoURL"]);
 
-	}
+	}//end
 	});
 }
