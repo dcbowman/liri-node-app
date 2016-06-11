@@ -47,7 +47,7 @@ function movieSearch(){
 var request = require('request');
 // request to the OMDB API with the movie specified 
 	
-	var queryUrl = 'http://www.omdbapi.com/?t=' + value +'&y=&plot=short&r=json';
+	var queryUrl = 'http://www.omdbapi.com/?t=' + value +'&y=&plot=short&r=json&tomatoes=true';
 
 // This line is just to help us debug against the actual URL.  
 	console.log(queryUrl);
