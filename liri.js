@@ -65,6 +65,7 @@ function random(){
 	console.log(dataArr); //ensures it's split 
 
 	spotifySong(dataArr[0], dataArr[1]);//runs the spotfify funtion
+	value = dataArr[1]; //reassigns song search value to d
 
 	});//end of fs.read
 
@@ -89,6 +90,7 @@ function twitter(){
 	}
 	
 }
+//end of twitter function
 
 
 function movieSearch(){
